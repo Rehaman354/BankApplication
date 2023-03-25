@@ -32,17 +32,15 @@ public class CurrentAccount extends BankAccount{
         {
            if(s.charAt(i)==s.charAt(i+1)) valid=false;
         }
-        String str = null;
-        if(valid!=true)//means the present Id is not valid
+        if(valid!=true)
         {
-            str=generateId(s,0,n-1);
+            String str = new String("");
+            str = generateId(s, 0, n - 1);
+            if (str.length() == 0)
+                throw new Exception("Valid License can not be generated");
+            else
+                this.tradeLicenseId = str;
         }
-        if(str.length()==0)
-            throw new Exception("Valid License can not be generated");
-        else
-            this.tradeLicenseId=str;
-
-
     }
     public String generateId(String s,int l,int r)
     {
