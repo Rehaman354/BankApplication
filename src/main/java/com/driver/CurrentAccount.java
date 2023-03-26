@@ -34,45 +34,57 @@ public class CurrentAccount extends BankAccount{
         }
         if(valid!=true)
         {
-            String str = new String("");
-            str = generateId(s, 0, n - 1);
-            if (str.length() == 0)
+            //we take one freq arr and store frequencies
+            int freq[]=new int[26];
+            for(int i=0;i<n;i++)
+            {
+                freq[s.charAt(i)-'A']++;
+            }
+            //search for the maximum frequency
+            int max=Integer.MIN_VALUE;
+            int maxchar=-1;
+            for(int i=0;i<26;i++)
+            {
+                if(freq[i]>max) {
+                    max = Math.max(max, freq[i]);
+                    maxchar=i;
+                }
+            }
+            //if max is greater than
+            if(n%2!=0&& (n/2)+1<max)
                 throw new Exception("Valid License can not be generated");
-            else
-                this.tradeLicenseId = str;
+            if(n%2==0 && (n/2)<max)
+                throw new Exception("Valid License can not be generated");
+            //forming the valid by initially filling the odd positions first
+            int i=0;
+            char[] newId=new char[n];
+            while(i<n) {
+                if (freq[maxchar] > 0) {
+                    newId[i] = (char) (maxchar + 'A');
+                    freq[maxchar]--;
+                    i = i + 2;
+                    if (i >= n) i = 1;
+                }
+            }
+            //now fill remaining positions
+            for(int j=0;j<26;j++)
+            {
+                while(freq[j] > 0) {
+                    newId[i] = (char) (j + 'A');
+                    freq[j]--;
+                    i = i + 2;
+                    if (i >= n) i = 1;
+                }
+            }
+            //form the string from char array
+            StringBuilder sb=new StringBuilder();
+            for(int idx=0;idx<n;idx++)
+            {
+               sb.append(newId[idx]);
+            }
+            //strore the licenseId
+            this.tradeLicenseId=sb.toString();
         }
-    }
-    public String generateId(String s,int l,int r)
-    {
-        String ans="";
-        String stri=permute(s,ans);
-        return stri;
-    }
-    public String permute(String s,String asf)
-    {
-        if(s.length()==0)
-        {
-            boolean b=isValid(asf);
-            if(b==true)
-                return asf;
-            return "";
-        }
-        int n=s.length();
-        for(int i=0;i<n;i++)
-        {
-            String st=permute(s.substring(i+1),asf+s.charAt(i));
-            if(st.length()!=0)return st;
-        }
-        return null;
-    }
-    public boolean isValid(String s){
-
-        int n=s.length();
-        for(int i=0;i<n-1;i++)
-        {
-            if(s.charAt(i)==s.charAt(i+1)) return false;
-        }
-        return true;
     }
 
 }
