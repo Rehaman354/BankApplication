@@ -65,6 +65,9 @@ public class CurrentAccount extends BankAccount{
                     i = i + 2;
                     if (i >= n) i = 1;
                 }
+                else {
+                    break;
+                }
             }
             //now fill remaining positions
             for(int j=0;j<26;j++)
