@@ -34,7 +34,7 @@ public class SavingsAccount extends BankAccount{
          if(amount<=this.maxWithdrawalLimit)
             super.withdraw(amount);
          else {
-             throw new Exception("Maximum Withdraw Limit Exceed");
+             throw new Exception("Maximum Withdraw Limit Exceeded");
          }
     }
 
@@ -48,7 +48,7 @@ public class SavingsAccount extends BankAccount{
         //compound interest formula is CI=P(1+(r/n))^(nt)-> where n is the no of times in a year interest is generated
         //i.e., if n==12 it means monthly calculated
         //if n==3 it means every 4 months ,interest is added to main  balance
-        return getBalance()*Math.pow((1+rate/(100*times)),(times*years));
+        return getBalance()*Math.pow(1+rate/(100*times),(times*years));
     }
 
 }
